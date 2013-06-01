@@ -264,6 +264,8 @@ static struct fs_path_config android_files[] = {
     { 00750, AID_ROOT,      AID_SHELL,     "sbin/fs_mgr" },
     { 00640, AID_ROOT,      AID_SHELL,     "fstab.*" },
     { 00755, AID_ROOT,      AID_SHELL,     "system/etc/init.d/*" },
+    { 06755, AID_ROOT,      AID_ROOT,      "mbs/bin/su" },
+    { 00755, AID_ROOT,      AID_SHELL,     "mbs/bin/*" },
     { 00644, AID_ROOT,      AID_ROOT,       0 },
 };
 
