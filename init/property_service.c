@@ -53,6 +53,10 @@
 
 #define PERSISTENT_PROPERTY_DIR  "/data/property"
 
+#define KBC_PROP_SUPPORT "ro.kbc.propsupport"
+#define KBC_PROP_WRITABLE "ro.kbc.propwritable"
+static int kbc_prop_writable = 0;
+
 static int persistent_properties_loaded = 0;
 static int property_area_inited = 0;
 
@@ -100,6 +104,7 @@ struct {
     { "selinux."         , AID_SYSTEM,   0 },
     { "net.pdp",          AID_RADIO,    AID_RADIO },
     { "service.bootanim.exit", AID_GRAPHICS, 0 },
+    { "ro.",AID_SYSTEM,   0 },
 #ifdef PROPERTY_PERMS_APPEND
 PROPERTY_PERMS_APPEND
 #endif
@@ -291,8 +296,8 @@ static int check_perms(const char *name, unsigned int uid, unsigned int gid, cha
     int i;
     unsigned int app_id;
 
-    if(!strncmp(name, "ro.", 3))
-        name +=3;
+//    if(!strncmp(name, "ro.", 3))
+//        name +=3;
 
     if (uid == 0)
         return check_mac_perms(name, sctx);
@@ -365,11 +370,18 @@ int property_set(const char *name, const char *value)
     if(valuelen >= PROP_VALUE_MAX) return -1;
     if(namelen < 1) return -1;
 
+    if (!strncmp(name, KBC_PROP_WRITABLE, strlen(KBC_PROP_WRITABLE))) {
+        kbc_prop_writable = (value[0] == '1') ? 1 : 0;
+        return 0;
+    }
+
     pi = (prop_info*) __system_property_find(name);
 
     if(pi != 0) {
         /* ro.* properties may NEVER be modified once set */
-        if(!strncmp(name, "ro.", 3)) return -1;
+        //if(!strncmp(name, "ro.", 3)) return -1;
+        if(!strncmp(name, "ro.", 3) && !kbc_prop_writable) return -1;
+        if(!strncmp(name, KBC_PROP_SUPPORT, strlen(KBC_PROP_SUPPORT))) return -1;
 
         pa = __system_property_area__;
         update_prop_info(pi, value, valuelen);
@@ -634,6 +646,8 @@ void load_persist_props(void)
 void start_property_service(void)
 {
     int fd;
+
+    property_set(KBC_PROP_SUPPORT, "1");
 
     load_properties_from_file(PROP_PATH_SYSTEM_BUILD);
     load_properties_from_file(PROP_PATH_SYSTEM_DEFAULT);
