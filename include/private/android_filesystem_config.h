@@ -97,6 +97,15 @@
 #define AID_QCOM_ONCRPC   3009  /* can read/write /dev/oncrpc files */
 #define AID_QCOM_DIAG     3010  /* can read/write /dev/diag */
 
+#if defined(LGEJPN_UIDS)
+//#define AID_LGEJPN_NFCLOCK           1030
+#define AID_LGEJPN_FELICA_MFM        4004 /*  */
+#define AID_LGEJPN_FELICA_MFS        4005 /*  */
+#define AID_LGEJPN_FELICA_MFW        4006 /*  */
+#define AID_LGEJPN_FELICA_FELICALOCK 4007 /*  */
+#define AID_LGEJPN_FELICA            4009 /*  */
+#endif
+
 #if defined(MOTOROLA_UIDS)
 #define AID_MOT_OSH       5000  /* OSH */
 #define AID_MOT_ACCY      9000  /* access to accessory */
@@ -187,6 +196,14 @@ static const struct android_id_info android_ids[] = {
     { "qcom_oncrpc", AID_QCOM_ONCRPC, },
     { "qcom_diag", AID_QCOM_DIAG, },
     { "net_bt_stack",  AID_NET_BT_STACK, },
+
+#if defined(LGEJPN_UIDS)
+    { "mfm",   AID_LGEJPN_FELICA_MFM       , },
+    { "mfc",   AID_LGEJPN_FELICA_MFS       , },
+    { "mfw",   AID_LGEJPN_FELICA_MFW       , },
+    { "felicalock",   AID_LGEJPN_FELICA_FELICALOCK, },
+    { "felica",   AID_LGEJPN_FELICA           , },
+#endif
 
 #if defined(MOTOROLA_UIDS)
     { "mot_osh",   AID_MOT_OSH, },
