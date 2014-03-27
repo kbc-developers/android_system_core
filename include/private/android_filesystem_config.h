@@ -104,6 +104,7 @@
 #define AID_LGEJPN_FELICA_MFW        4006 /*  */
 #define AID_LGEJPN_FELICA_FELICALOCK 4007 /*  */
 #define AID_LGEJPN_FELICA            4009 /*  */
+#define AID_LGEJPN_FELICA_MFC        4267 /*  */
 #endif
 
 #if defined(MOTOROLA_UIDS)
@@ -199,10 +200,12 @@ static const struct android_id_info android_ids[] = {
 
 #if defined(LGEJPN_UIDS)
     { "mfm",   AID_LGEJPN_FELICA_MFM       , },
-    { "mfc",   AID_LGEJPN_FELICA_MFS       , },
+    { "mfs",   AID_LGEJPN_FELICA_MFS       , },
     { "mfw",   AID_LGEJPN_FELICA_MFW       , },
     { "felicalock",   AID_LGEJPN_FELICA_FELICALOCK, },
     { "felica",   AID_LGEJPN_FELICA           , },
+    { "mfc",   AID_LGEJPN_FELICA_MFC           , },
+
 #endif
 
 #if defined(MOTOROLA_UIDS)
